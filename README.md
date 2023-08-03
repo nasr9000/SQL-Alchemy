@@ -1,6 +1,8 @@
 # SQL-Alchemy
 
-Instructions
+![image](https://github.com/nasr9000/SQL-Alchemy/assets/128746625/33af8177-fb3e-46f1-a179-5d8b84227245)
+
+
 Congratulations! You've decided to treat yourself to a long holiday vacation in Honolulu, Hawaii. To help with your trip planning, you decide to do a climate analysis about the area. The following sections outline the steps that you need to take to accomplish this task.
 
 Part 1: Analyze and Explore the Climate Data
