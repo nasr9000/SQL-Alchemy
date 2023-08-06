@@ -67,7 +67,7 @@ def homepage():
     )
         
 
-@app.route("/")
+@app.route("/api/v1.0/precipitation")
 def precipitation():
     """Retrieve last 12 months of data"""
     
@@ -203,8 +203,8 @@ def start(start):
     # maximum temperature calculated from the given start date to the end of the dataset
         return jsonify(start_data_list)
     
-    @app.route("/api/v1.0/<start>/<end>")
-    def start_end(start, end):
+@app.route("/api/v1.0/<start>/<end>")
+def future(start , end):
         """ Get min, max, and average temperature data from start date to end date"""
 
         # Create our session link from Python to the DB
@@ -218,28 +218,29 @@ def start(start):
         
     #Perform query to get TMIN, TAVG, and TMAX for all the dates from start date to
     # end date inclusive, taken from the URL
-    start_end_data = session.query(*sel).\
-                    filter(func.strftime("%Y-%m-%d", Measurement.date) >= start).\
-                    filter(func.strftime("%Y-%m-%d", Measurement.date) <= end).\
-                    group_by(Measurement.date).\
-                    order_by(Measurement.date).all
+        start_end_data = session.query(*sel).\
+        filter(func.strftime("%Y-%m-%d", Measurement.date) >= start).\
+        filter(func.strftime("%Y-%m-%d", Measurement.date) <= end).\
+        group_by(Measurement.date).\
+        order_by(Measurement.date).all()
     
+
     #close session
-    session.close
+        session.close
 
     # Create a list of dictionary to store date, min, max and avg temperature values
-    start_end_data_list = []
-    for date, min, max, avg in start_end_data_list:
-        start_dict = {}
-        start_dict["date"] = date
-        start_dict["min_temp"] = min
-        start_dict["max_temp"] = max
-        start_dict["avg_temp"] = avg
-        start_end_data_list.append(start_dict)
+        start_end_data_list = []
+        for date, min, max, avg in start_end_data:
+                    start_dict = {}
+                    start_dict["date"] = date
+                    start_dict["min_temp"] = min
+                    start_dict["max_temp"] = max
+                    start_dict["avg_temp"] = avg
+                    start_end_data_list.append(start_dict)
 
    # Return a JSON list of the minimum temperature, the average temperature, and the
    # maximum temperature calculated from the given start date to the given end date
-    return jsonify(start_end_data_list)
+        return jsonify(start_end_data_list)
 
 
 #################################################
